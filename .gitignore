@@ -1,0 +1,5 @@
+.DS_store
+*.iml
+.idea
+node_modules
+solr-5.0*

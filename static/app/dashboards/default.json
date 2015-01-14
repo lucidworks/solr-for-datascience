@@ -1,0 +1,871 @@
+{
+  "title": "Citi Bike Rides",
+  "services": {
+    "query": {
+      "idQueue": [
+        1
+      ],
+      "list": {
+        "0": {
+          "query": "*:*",
+          "alias": "",
+          "color": "#7EB26D",
+          "id": 0,
+          "pin": false,
+          "type": "lucene"
+        }
+      },
+      "ids": [
+        0
+      ]
+    },
+    "filter": {
+      "idQueue": [
+        4
+      ],
+      "list": {
+        "0": {
+          "type": "range",
+          "from": 1895,
+          "to": 2027,
+          "field": "birth_year_i",
+          "mandate": "must",
+          "active": true,
+          "alias": "",
+          "id": 0
+        },
+        "1": {
+          "from": "2014-01-31T07:34:10.000Z",
+          "to": "2014-03-02T04:11:59.000Z",
+          "field": "starttime_dt",
+          "type": "time",
+          "mandate": "must",
+          "active": true,
+          "alias": "",
+          "id": 1
+        },
+        "2": {
+          "type": "range",
+          "from": 0,
+          "to": 3000,
+          "field": "tripduration",
+          "mandate": "must",
+          "active": true,
+          "alias": "",
+          "id": 2
+        },
+        "3": {
+          "type": "range",
+          "from": 0,
+          "to": 3000,
+          "field": "tripduration_i",
+          "mandate": "must",
+          "active": true,
+          "alias": "",
+          "id": 3
+        }
+      },
+      "ids": [
+        2,
+        1,
+        3,
+        0
+      ]
+    }
+  },
+  "rows": [
+    {
+      "title": "Options",
+      "height": "50px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "title": "Set time span",
+          "error": "",
+          "span": 6,
+          "editable": true,
+          "group": [
+            "default"
+          ],
+          "type": "timepicker",
+          "mode": "absolute",
+          "time_options": [
+            "5m",
+            "15m",
+            "1h",
+            "6h",
+            "12h",
+            "24h",
+            "2d",
+            "7d",
+            "30d"
+          ],
+          "timespan": "30d",
+          "timefield": "starttime_dt",
+          "timeformat": "",
+          "refresh": {
+            "enable": false,
+            "interval": 600,
+            "min": 3
+          },
+          "filter_id": 1,
+          "status": "Stable",
+          "time": {
+            "from": "01/31/2014 02:34:10",
+            "to": "03/01/2014 23:11:59"
+          },
+          "spyable": true
+        },
+        {
+          "error": false,
+          "span": 4,
+          "editable": true,
+          "type": "query",
+          "loadingEditor": false,
+          "query": "*:*",
+          "pinned": true,
+          "history": [
+            "*:*",
+            "start_station:Union*"
+          ],
+          "remember": 10,
+          "title": "Search",
+          "def_type": "",
+          "spyable": true
+        },
+        {
+          "span": 2,
+          "editable": true,
+          "type": "hits",
+          "loadingEditor": false,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0
+            ],
+            "query": "q=*%3A*&defType=edismax&fq=starttime_dt:[2014-01-31T07:34:10.000Z%20TO%202014-03-02T04:11:59.000Z]&fq=birth_year_i:[1895 TO 2027]&fq=tripduration:[0 TO 3000]&fq=tripduration_i:[0 TO 3000]&wt=json&rows=0\n",
+            "basic_query": "",
+            "custom": ""
+          },
+          "style": {
+            "font-size": "32pt"
+          },
+          "arrangement": "horizontal",
+          "chart": "total",
+          "counter_pos": "above",
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "spyable": true,
+          "title": "Hits",
+          "show_queries": true
+        }
+      ]
+    },
+    {
+      "title": "Bike Trip Counts",
+      "height": "150px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 4,
+          "editable": true,
+          "type": "histogram",
+          "loadingEditor": false,
+          "mode": "count",
+          "time_field": "starttime_dt",
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0
+            ],
+            "query": "q=*%3A*&defType=edismax&wt=json&rows=0&fq=starttime_dt:[2014-01-31T07:34:10.000Z%20TO%202014-03-02T04:11:59.000Z]&fq=birth_year_i:[1895 TO 2027]&fq=tripduration:[0 TO 3000]&fq=tripduration_i:[0 TO 3000]&facet=true&facet.range=starttime_dt&facet.range.start=2014-01-31T07:34:10.000Z&facet.range.end=2014-03-02T04:11:59.000Z&facet.range.gap=%2B12HOUR\n",
+            "custom": ""
+          },
+          "max_rows": 100000,
+          "value_field": null,
+          "group_field": null,
+          "auto_int": true,
+          "resolution": 100,
+          "interval": "12h",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1M",
+            "1y"
+          ],
+          "fill": 0,
+          "linewidth": 3,
+          "timezone": "browser",
+          "spyable": true,
+          "zoomlinks": true,
+          "bars": true,
+          "stack": false,
+          "points": false,
+          "lines": false,
+          "lines_smooth": false,
+          "legend": true,
+          "x-axis": true,
+          "y-axis": true,
+          "percentage": false,
+          "interactive": true,
+          "options": true,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": false
+          },
+          "title": "Bike Trips Over Time",
+          "show_queries": true
+        },
+        {
+          "span": 4,
+          "editable": true,
+          "type": "rangeFacet",
+          "loadingEditor": false,
+          "mode": "count",
+          "time_field": "timestamp",
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0
+            ],
+            "query": "q=*%3A*&defType=edismax&wt=json&rows=0&fq=starttime_dt:[2014-01-31T07:34:10.000Z%20TO%202014-03-02T04:11:59.000Z]&fq=birth_year_i:[1895 TO 2027]&fq=tripduration:[0 TO 3000]&fq=tripduration_i:[0 TO 3000]&facet=true&facet.range=tripduration_i&facet.range.start=0&facet.range.end=3001&facet.range.gap=31\n",
+            "custom": ""
+          },
+          "max_rows": 100000,
+          "value_field": null,
+          "group_field": null,
+          "auto_int": true,
+          "resolution": 100,
+          "interval": 31,
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1M",
+            "1y"
+          ],
+          "fill": 0,
+          "linewidth": 3,
+          "timezone": "browser",
+          "spyable": true,
+          "zoomlinks": true,
+          "bars": true,
+          "stack": true,
+          "points": false,
+          "lines": false,
+          "lines_smooth": false,
+          "legend": true,
+          "x-axis": true,
+          "y-axis": true,
+          "percentage": false,
+          "interactive": true,
+          "options": true,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": false
+          },
+          "range_field": "tripduration_i",
+          "minimum": 0,
+          "maximum": 3000,
+          "gap": 50,
+          "showChart": true,
+          "title": "Trip Duration Distribution",
+          "resolutions": [
+            5,
+            10,
+            25,
+            50,
+            75,
+            100
+          ],
+          "show_queries": true,
+          "error": false
+        },
+        {
+          "span": 4,
+          "editable": true,
+          "type": "rangeFacet",
+          "loadingEditor": false,
+          "mode": "count",
+          "time_field": "timestamp",
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0
+            ],
+            "query": "q=*%3A*&defType=edismax&wt=json&rows=0&fq=starttime_dt:[2014-01-31T07:34:10.000Z%20TO%202014-03-02T04:11:59.000Z]&fq=birth_year_i:[1895 TO 2027]&fq=tripduration:[0 TO 3000]&fq=tripduration_i:[0 TO 3000]&facet=true&facet.range=birth_year_i&facet.range.start=1895&facet.range.end=2028&facet.range.gap=2\n",
+            "custom": ""
+          },
+          "max_rows": 100000,
+          "value_field": null,
+          "group_field": null,
+          "auto_int": true,
+          "resolution": 100,
+          "interval": 2,
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1M",
+            "1y"
+          ],
+          "fill": 0,
+          "linewidth": 3,
+          "timezone": "browser",
+          "spyable": true,
+          "zoomlinks": true,
+          "bars": true,
+          "stack": true,
+          "points": false,
+          "lines": false,
+          "lines_smooth": false,
+          "legend": true,
+          "x-axis": true,
+          "y-axis": true,
+          "percentage": false,
+          "interactive": true,
+          "options": true,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": false
+          },
+          "range_field": "birth_year_i",
+          "minimum": 1895,
+          "maximum": 2027,
+          "gap": 5,
+          "showChart": true,
+          "title": "Birth Dates Distribution",
+          "resolutions": [
+            5,
+            10,
+            25,
+            50,
+            75,
+            100
+          ],
+          "show_queries": true
+        }
+      ]
+    },
+    {
+      "title": "Slicing and Dicing",
+      "height": "150px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 2,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0
+            ],
+            "query": "q=*%3A*&defType=edismax&wt=json&rows=0&fq=starttime_dt:[2014-01-31T07:34:10.000Z%20TO%202014-03-02T04:11:59.000Z]&fq=birth_year_i:[1895 TO 2027]&fq=tripduration:[0 TO 3000]&fq=tripduration_i:[0 TO 3000]&facet=true&facet.field=start_station_name&facet.limit=20&facet.missing=true",
+            "custom": ""
+          },
+          "field": "start_station_name",
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 20,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": false,
+          "arrangement": "horizontal",
+          "chart": "pie",
+          "counter_pos": "none",
+          "spyable": true,
+          "time_field": "start_tim",
+          "title": "Start Station",
+          "mode": "count",
+          "stats_field": "",
+          "decimal_points": 0,
+          "logAxis": false,
+          "lastColor": "",
+          "show_queries": true,
+          "chartColors": [
+            "#7EB26D",
+            "#EAB839",
+            "#6ED0E0",
+            "#EF843C",
+            "#E24D42",
+            "#1F78C1",
+            "#BA43A9",
+            "#705DA0",
+            "#508642",
+            "#CCA300",
+            "#447EBC",
+            "#C15C17",
+            "#890F02",
+            "#0A437C",
+            "#6D1F62",
+            "#584477",
+            "#B7DBAB",
+            "#F4D598",
+            "#70DBED",
+            "#F9BA8F",
+            "#F29191",
+            "#82B5D8",
+            "#E5A8E2",
+            "#AEA2E0",
+            "#629E51",
+            "#E5AC0E",
+            "#64B0C8",
+            "#E0752D",
+            "#BF1B00",
+            "#0A50A1",
+            "#962D82",
+            "#614D93",
+            "#9AC48A",
+            "#F2C96D",
+            "#65C5DB",
+            "#F9934E",
+            "#EA6460",
+            "#5195CE",
+            "#D683CE",
+            "#806EB7",
+            "#3F6833",
+            "#967302",
+            "#2F575E",
+            "#99440A",
+            "#58140C",
+            "#052B51",
+            "#511749",
+            "#3F2B5B",
+            "#E0F9D7",
+            "#FCEACA",
+            "#CFFAFF",
+            "#F9E2D2",
+            "#FCE2DE",
+            "#BADFF4",
+            "#F9D9F9",
+            "#DEDAF7"
+          ]
+        },
+        {
+          "span": 2,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0
+            ],
+            "query": "q=*%3A*&defType=edismax&wt=json&rows=0&fq=starttime_dt:[2014-01-31T07:34:10.000Z%20TO%202014-03-02T04:11:59.000Z]&fq=birth_year_i:[1895 TO 2027]&fq=tripduration:[0 TO 3000]&fq=tripduration_i:[0 TO 3000]&stats=true&stats.facet=user_type_s&stats.field=tripduration_i&facet.missing=true",
+            "custom": ""
+          },
+          "field": "user_type_s",
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "bar",
+          "counter_pos": "none",
+          "spyable": true,
+          "time_field": "starttime_dt",
+          "title": "Avg. Duration by User Type",
+          "mode": "mean",
+          "stats_field": "tripduration_i",
+          "decimal_points": 2,
+          "logAxis": false,
+          "lastColor": "",
+          "show_queries": true,
+          "chartColors": [
+            "#7EB26D",
+            "#EAB839",
+            "#6ED0E0",
+            "#EF843C",
+            "#E24D42",
+            "#1F78C1",
+            "#BA43A9",
+            "#705DA0",
+            "#508642",
+            "#CCA300",
+            "#447EBC",
+            "#C15C17",
+            "#890F02",
+            "#0A437C",
+            "#6D1F62",
+            "#584477",
+            "#B7DBAB",
+            "#F4D598",
+            "#70DBED",
+            "#F9BA8F",
+            "#F29191",
+            "#82B5D8",
+            "#E5A8E2",
+            "#AEA2E0",
+            "#629E51",
+            "#E5AC0E",
+            "#64B0C8",
+            "#E0752D",
+            "#BF1B00",
+            "#0A50A1",
+            "#962D82",
+            "#614D93",
+            "#9AC48A",
+            "#F2C96D",
+            "#65C5DB",
+            "#F9934E",
+            "#EA6460",
+            "#5195CE",
+            "#D683CE",
+            "#806EB7",
+            "#3F6833",
+            "#967302",
+            "#2F575E",
+            "#99440A",
+            "#58140C",
+            "#052B51",
+            "#511749",
+            "#3F2B5B",
+            "#E0F9D7",
+            "#FCEACA",
+            "#CFFAFF",
+            "#F9E2D2",
+            "#FCE2DE",
+            "#BADFF4",
+            "#F9D9F9",
+            "#DEDAF7"
+          ]
+        },
+        {
+          "span": 2,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0
+            ],
+            "query": "q=*%3A*&defType=edismax&wt=json&rows=0&fq=starttime_dt:[2014-01-31T07:34:10.000Z%20TO%202014-03-02T04:11:59.000Z]&fq=birth_year_i:[1895 TO 2027]&fq=tripduration:[0 TO 3000]&fq=tripduration_i:[0 TO 3000]&stats=true&stats.facet=gender_s&stats.field=birth_year_i&facet.missing=true",
+            "custom": ""
+          },
+          "mode": "mean",
+          "field": "gender_s",
+          "stats_field": "birth_year_i",
+          "decimal_points": 2,
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 10,
+          "order": "descending",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "bar",
+          "counter_pos": "none",
+          "spyable": true,
+          "title": "Avg. Birth Year by Gender_S",
+          "logAxis": false,
+          "lastColor": "",
+          "show_queries": true,
+          "chartColors": [
+            "#7EB26D",
+            "#EAB839",
+            "#6ED0E0",
+            "#EF843C",
+            "#E24D42",
+            "#1F78C1",
+            "#BA43A9",
+            "#705DA0",
+            "#508642",
+            "#CCA300",
+            "#447EBC",
+            "#C15C17",
+            "#890F02",
+            "#0A437C",
+            "#6D1F62",
+            "#584477",
+            "#B7DBAB",
+            "#F4D598",
+            "#70DBED",
+            "#F9BA8F",
+            "#F29191",
+            "#82B5D8",
+            "#E5A8E2",
+            "#AEA2E0",
+            "#629E51",
+            "#E5AC0E",
+            "#64B0C8",
+            "#E0752D",
+            "#BF1B00",
+            "#0A50A1",
+            "#962D82",
+            "#614D93",
+            "#9AC48A",
+            "#F2C96D",
+            "#65C5DB",
+            "#F9934E",
+            "#EA6460",
+            "#5195CE",
+            "#D683CE",
+            "#806EB7",
+            "#3F6833",
+            "#967302",
+            "#2F575E",
+            "#99440A",
+            "#58140C",
+            "#052B51",
+            "#511749",
+            "#3F2B5B",
+            "#E0F9D7",
+            "#FCEACA",
+            "#CFFAFF",
+            "#F9E2D2",
+            "#FCE2DE",
+            "#BADFF4",
+            "#F9D9F9",
+            "#DEDAF7"
+          ]
+        },
+        {
+          "error": false,
+          "span": 6,
+          "editable": true,
+          "type": "filtering",
+          "loadingEditor": false,
+          "title": "Trip Duration Distribution",
+          "spyable": true
+        }
+      ]
+    },
+    {
+      "title": "BetterMapDemo",
+      "height": "650px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "title": "End Station",
+          "span": 6,
+          "editable": true,
+          "tooltip": "end_station_location_p_id",
+          "group": [
+            "default"
+          ],
+          "field": "end_station_location_p",
+          "type": "bettermap",
+          "size": 7000,
+          "time_field": "starttime_dt",
+          "lat_start": null,
+          "lat_end": null,
+          "lon_start": null,
+          "lon_end": null,
+          "dist": 100,
+          "sort": [
+            "starttime_dt",
+            "desc"
+          ],
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0
+            ],
+            "custom": "",
+            "query": "q=*%3A*&defType=edismax&wt=json&rows=7000&fq=starttime_dt:[2014-01-31T07:34:10.000Z%20TO%202014-03-02T04:11:59.000Z]&fq=birth_year_i:[1895 TO 2027]&fq=tripduration:[0 TO 3000]&fq=tripduration_i:[0 TO 3000]&sort=starttime_dt desc"
+          },
+          "spyable": true,
+          "show_queries": true
+        },
+        {
+          "span": 6,
+          "editable": true,
+          "type": "table",
+          "loadingEditor": false,
+          "status": "Stable",
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0
+            ],
+            "query": "q=*%3A*&defType=edismax&fq=starttime_dt:[2014-01-31T07:34:10.000Z%20TO%202014-03-02T04:11:59.000Z]&fq=birth_year_i:[1895 TO 2027]&fq=tripduration:[0 TO 3000]&fq=tripduration_i:[0 TO 3000]&sort=starttime_dt asc&wt=json&rows=200",
+            "basic_query": "q=*%3A*&defType=edismax&fq=starttime_dt:[2014-01-31T07:34:10.000Z%20TO%202014-03-02T04:11:59.000Z]&fq=birth_year_i:[1895 TO 2027]&fq=tripduration:[0 TO 3000]&fq=tripduration_i:[0 TO 3000]&sort=starttime_dt asc",
+            "custom": ""
+          },
+          "size": 20,
+          "pages": 10,
+          "offset": 0,
+          "sort": [
+            "starttime_dt",
+            "asc"
+          ],
+          "group": "default",
+          "style": {
+            "font-size": "9pt"
+          },
+          "overflow": "min-height",
+          "fields": [
+            "start_station_name",
+            "end_station_location_p_name",
+            "starttime_dt",
+            "user_type_s",
+            "birth_year_i",
+            "gender_s",
+            "tripduration_i"
+          ],
+          "highlight": [],
+          "sortable": true,
+          "header": true,
+          "paging": true,
+          "field_list": true,
+          "trimFactor": 300,
+          "normTimes": true,
+          "spyable": true,
+          "saveOption": "json",
+          "exportSize": 500,
+          "exportAll": true,
+          "title": "Bike Trips",
+          "important_fields": [
+            "_text",
+            "_version_",
+            "bikeid_i",
+            "birth_year_i",
+            "end_station_id_i",
+            "end_station_location_p",
+            "end_station_location_p_0_coordinate",
+            "end_station_location_p_1_coordinate",
+            "end_station_name",
+            "end_station_name_idx",
+            "gender_s",
+            "id",
+            "start_station_id_i",
+            "start_station_location_p",
+            "start_station_location_p_0_coordinate",
+            "start_station_location_p_1_coordinate",
+            "start_station_name",
+            "start_station_name_idx",
+            "starttime_dt",
+            "stoptime_dt",
+            "tripduration_i",
+            "user_type_s"
+          ],
+          "displayLinkIcon": true,
+          "imageFields": [],
+          "imgFieldWidth": "auto",
+          "imgFieldHeight": "85px",
+          "show_queries": true
+        }
+      ]
+    },
+    {
+      "title": "Heatmap",
+      "height": "350px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 12,
+          "editable": true,
+          "type": "heatmap",
+          "loadingEditor": false,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0
+            ],
+            "query": "q=*%3A*&defType=edismax&fq=starttime_dt:[2014-01-31T07:34:10.000Z%20TO%202014-03-02T04:11:59.000Z]&fq=birth_year_i:[1895 TO 2027]&fq=tripduration:[0 TO 3000]&fq=tripduration_i:[0 TO 3000]&wt=json&rows=0&facet=true&facet.pivot=start_station_name,end_station_name&facet.limit=300&facet.pivot.mincount=0",
+            "custom": ""
+          },
+          "size": 0,
+          "row_field": "start_station_name",
+          "col_field": "end_station_name",
+          "row_size": 300,
+          "editor_size": 300,
+          "color": "gray",
+          "spyable": true,
+          "transpose_show": true,
+          "transposed": false,
+          "show_queries": true,
+          "title": "Hotspots"
+        }
+      ]
+    }
+  ],
+  "editable": true,
+  "failover": false,
+  "index": {
+    "interval": "none",
+    "pattern": "[logstash-]YYYY.MM.DD",
+    "default": "NO_TIME_FILTER_OR_INDEX_PATTERN_NOT_MATCHED"
+  },
+  "style": "light",
+  "panel_hints": true,
+  "loader": {
+    "save_gist": false,
+    "save_elasticsearch": true,
+    "save_local": true,
+    "save_default": true,
+    "save_temp": true,
+    "save_temp_ttl_enable": true,
+    "save_temp_ttl": "30d",
+    "load_gist": true,
+    "load_elasticsearch": true,
+    "load_elasticsearch_size": 20,
+    "load_local": true,
+    "hide": false,
+    "dropdown_collections": false
+  },
+  "solr": {
+    "server": "http://localhost:3334/solr/",
+    "core_name": "citi2",
+    "global_params": "&defType=edismax",
+    "core_list": [
+      "citi2_shard1_replica1"
+    ]
+  }
+}
