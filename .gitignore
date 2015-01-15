@@ -3,3 +3,4 @@
 .idea
 node_modules
 solr-5.0*
+data/full

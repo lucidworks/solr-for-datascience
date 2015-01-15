@@ -862,7 +862,7 @@
   },
   "solr": {
     "server": "http://localhost:3334/solr/",
-    "core_name": "citi2",
+    "core_name": "citi_py",
     "global_params": "&defType=edismax",
     "core_list": [
       "citi2_shard1_replica1"

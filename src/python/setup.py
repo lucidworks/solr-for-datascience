@@ -231,4 +231,15 @@ SOLR_URL = LWS_URL + "/solr/" + COLLECTION
 
 
 solr = pysolr.Solr(SOLR_URL, timeout=10)
-index(opts.input)
+if os.path.isfile(opts.input):
+    index(opts.input)
+else:
+    start_time = time.time()
+    for (dirpath, dirnames, filenames) in os.walk(opts.input):
+        for file in filenames:
+            if "csv" in file:
+                print "Indexing " + file
+                index(opts.input + "/" + file)
+    end_time = time.time()
+    print "Time: " + str(end_time - start_time) + " ms"
+

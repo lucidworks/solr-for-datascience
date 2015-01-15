@@ -1,88 +1,99 @@
 <html>
 <head><title>Solr for Data Science</title></head>
 <body>
+<div><img src="./lucid-works.svg" alt="Lucidworks" width="160" height="27" class="white-logo">
+</div>
 <h1>Introduction</h1>
-<div>Solr is a phenomonal tool for data science, allowing you to quickly explore data sets no matter the format and then build out to do a wide variety of analysis across a lot of different data types.  
+
+<div>Solr is a phenomonal tool for data science, allowing you to quickly explore data sets no matter the format and then
+  build out to do a wide variety of analysis across a lot of different data types.
   In this tutorial, we'll explore how Solr can be used for data science by looking at the <a
-      href="http://www.citibikenyc.com/system-data">Citibike</a> data set</div>.
+      href="http://www.citibikenyc.com/system-data">Citibike</a> data set.
+</div>
+<div>For more details, please see Grant Ingersoll's talk "Solr for Data Science" on <a href="">Slideshare</a></div>
 
 <h1>Getting started</h1>
+
 <div>
   <ul>
-    <li>Download the <a href="http://www.citibikenyc.com/system-data">data</a> and copy it to the data directory if you wish to finish the whole tutorial.  Otherwise, just use the samples in this directory.</li>
+    <li>Download the <a href="http://www.citibikenyc.com/system-data">data</a> and copy it to the data directory if you
+      wish to finish the whole tutorial. Otherwise, just use the samples in this directory.
+    </li>
     <li>Download Solr 5 (or a release candidate if Solr 5 isn't released yet) into this directory and unpack it.</li>
+    <li>./setup.sh</li>
   </ul>
 </div>
-<h1>Start Solr</h1>
+<h1>Get your bike ready</h1>
 
 <div>
   <il>
-    <li>cd solr-5.0.0 //Or solr-5.0.0-SNAPSHOT -- We'll call this directory $SOLR_HOME</li>
-    <li>bin/solr start -cloud</li>
+    <li>./setup.sh (Windows users should be able to easily translate the commands in these scripts to Windows -- Caveat
+      Emptor: I've only tested on OS X. Pull Requests welcome.)
+    </li>
+    <li>./index-post.sh</li>
   </il>
 </div>
 <h1>Solr 5 Citibike Example</h1>
 
 <div>
-  <h3>Index the data</h3>
-
-  <div>
-    <ul>
-      <li>cd $SOLR_HOME/</li>
-      <li>bin/solr create_collection -c citi</li>
-      <li>bin/post citi ~/projects/lucid/solr-for-datascience/2013-07-citi-sample.csv</li>
-    </ul>
-  </div>
-  <h3>Stretch your legs</h3>
+  <h2>Stretch your legs</h2>
 
   <div>
     <ul>
       <li><a
-          href="http://localhost:8983/solr/citi/browse?&facet=true&facet.field=bikeid&facet.limit=10&facet.field=gender&facet.field=birth_year">Search
+          href="http://localhost:8983/solr/citi/browse?&facet=true&facet.field=bikeid&facet.limit=10&facet.field=gender&facet.field=birth_year&start_station_name">Search
         and Browse w/
         Facets</a></li>
       <li><a
-          href="http://localhost:8983/solr/citi/browse?&facet=true&facet.field=bikeid&facet.limit=10&facet.field=start_station_name&facet.field=bikeid">Popular
-        bikes and stations</a></li>
-      <li><a
           href="http://localhost:8983/solr/citi/select?&q=*:*&rows=0&facet=true&facet.field=bikeid&facet.limit=10&facet.date=starttime&facet.date.start=2013-07-01T00:00:00Z&facet.date.end=2013-10-31T11:59:59Z&facet.date.gap=%2B1DAY">Day
         Usage</a></li>
+      <li><a
+          href="http://localhost:8983/solr/citi/select?&q=*:*&rows=0&stats=true&stats.field=birth_year&stats.calcdistinct=true">Data
+        Quality Issues</a></li>
     </ul>
   </div>
-  <h3>Breakaway from the peloton</h3>
+  <h2>Breakaway from the peloton</h2>
 
   <div>
     <ul>
       <li><a
-          href="http://localhost:8983/solr/citi_shard1_replica1/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot=start_station_name,end_station_name">Most
+          href="http://localhost:8983/solr/citi/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot=start_station_name,end_station_name">Most
         popular trips (station to station)</a></li>
       <li><a
-          href="http://localhost:8983/solr/citi_shard1_replica1/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot=bikeid,start_station_name,end_station_name">Life
-        and times of a bike</a></li>
-      <li><a
-          href="http://localhost:8983/solr/citi_shard1_replica1/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot=gender,start_station_name&facet.limit=20">Most
-        popular stations by gender (0 = N/A, 1 = Male, 2 = Female)</a></li>
-      <li><a
-          href="http://localhost:8983/solr/citi_shard1_replica1/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot=usertype,start_station_name&facet.limit=20">Most
-        popular stations by customer type</a></li>
-      <li><a
-          href="http://localhost:8983/solr/citi_shard1_replica1/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot=usertype,gender,start_station_name&facet.limit=20">Most
-        popular stations by customer type and gender</a></li>
-      <li><a
-          href="http://localhost:8983/solr/citi_shard1_replica1/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}start_station_name,end_station_name&stats=true&stats.field={!tag=piv1}tripduration">City
-        planning</a> -- Where should I put my bike lanes?
+          href="http://localhost:8983/solr/citi/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}start_station_name,end_station_name&stats=true&stats.field={!tag=piv1}tripduration">Most
+        popular trips with stats</a> -- Where should I put my bike lanes?
       </li>
       <li><a
-          href="http://localhost:8983/solr/citi_shard1_replica1/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}bikeid&stats=true&stats.field={!tag=piv1}tripduration">Bike
+          href="http://localhost:8983/solr/citi/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot=bikeid,start_station_name,end_station_name">Life
+        and times of a bike</a></li>
+      <li><a
+          href="http://localhost:8983/solr/citi/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}bikeid,start_station_name,end_station_name&stats=true&stats.field={!tag=piv1}tripduration">Life
+        and times of a bike with stats</a></li>
+      <li><a
+          href="http://localhost:8983/solr/citi/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}bikeid&stats=true&stats.field={!tag=piv1}tripduration">Bike
         Usage</a> -- Can I optimize maintenance?
       </li>
       <li><a
-          href="http://localhost:8983/solr/citi_shard1_replica1/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}bikeid,start_station_name&stats=true&stats.field={!tag=piv1}tripduration">Life
-        and times of a bike with stats</a></li>
-
+          href="http://localhost:8983/solr/citi/select?q=*:*&rows=0&wt=json&indent=true&facet=true&facet.pivot={!stats=piv2}start_station_name&stats=true&stats.field={!tag=piv2}tripduration">Stats
+        on trips from most popular stations</a></li>
+      <li><a
+          href="http://localhost:8983/solr/citi/select?q=*:*&rows=0&wt=json&indent=true&facet=true&facet.pivot={!stats=piv2}usertype,gender&stats=true&stats.field={!tag=piv2}birth_year">Customer
+        Stats</a></li>
+      <li><a
+          href="http://localhost:8983/solr/citi/select?q=*:*&rows=0&wt=json&indent=true&facet=true&facet.pivot={!stats=piv2}gender&stats=true&stats.field={!tag=piv2}tripduration">Who
+        rides more: men or women?</a></li>
+      <li><a
+          href="http://localhost:8983/solr/citi/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot=gender,start_station_name&facet.limit=20">Most
+        popular stations by gender (0 = N/A, 1 = Male, 2 = Female)</a></li>
+      <li><a
+          href="http://localhost:8983/solr/citi/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot=usertype,start_station_name&facet.limit=20">Most
+        popular stations by customer type</a></li>
+      <li><a
+          href="http://localhost:8983/solr/citi/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot=usertype,gender,start_station_name&facet.limit=20">Most
+        popular stations by customer type and gender</a></li>
     </ul>
   </div>
-  <h3>Attack the Hills</h3>
+  <h2>Attack the Hills</h2>
 
   <div>
     For this example, we want to massage the data a little bit to do the following:
@@ -98,36 +109,27 @@
 
     <div>
       <ul>
-        <li>cd $SOLR_HOME/</li>
-        <li>bin/solr create_collection -c citi</li>
-        <li>cd $SOLR_FOR_DATA_SCIENCE_HOME</li>
-        <li>python setup.py -i 2013-07-citi-sample.csv -l citi_py</li>
+        <li>./index-py.sh</li>
       </ul>
     </div>
     <h3>Example Queries</h3>
 
     <div>
       <ul>
+        <li>All of the above queries should work by changing the field names appropriately</li>
         <li><a
             href="http://localhost:8983/solr/citi_py/select?q=*:*&rows=0&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}start_station_name&facet.pivot={!stats=piv2}bikeid_i&stats=true&stats.field={!tag=piv1,piv2}tripduration_i&fq={!geofilt sfield=start_station_location_p}&pt=40.760479,-73.98774&d=2&fl=id, start_station_name, geodist(start_station_location_p)">Stats
           on bike usage for bikes originating within 2 km of Times Square</a></li>
         <li><a
-            href="http://localhost:8983/solr/citi_py/select?q=*:*&rows=0&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}start_station_name&facet.pivot={!stats=piv2}bikeid_i&stats=true&stats.field={!tag=piv1,piv2}tripduration_i&fq={!geofilt sfield=start_station_location_p}&pt=40.760479,-73.98774&d=5&fl=id, start_station_name, geodist(start_station_location_p)">Stats
-          on bike usage for bikes originating within 5 km of Times Square</a></li>
-        clean up: focus on gender, dates, spatial
+            href="http://localhost:8983/solr/citi_py/select?&q=*:*&rows=0&facet=true&facet.limit=10&facet.range=birth_year_i&facet.range.start=1920&facet.range.end=2016&facet.range.gap=10">Usage
+          by birth decade (range facets)</a></li>
         <li><a
-            href="http://localhost:8983/solr/citi_py/select?q=*:*&rows=0&wt=json&indent=true&facet=true&facet.pivot={!stats=piv2}bikeid_i&stats=true&stats.field={!tag=piv2}tripduration_i">Bike
-          Usage</a></li>
-        <li><a
-            href="http://localhost:8983/solr/citi_py/select?q=*:*&rows=0&wt=json&indent=true&facet=true&facet.pivot={!stats=piv2}start_station_name&stats=true&stats.field={!tag=piv2}tripduration_i">Station
-          Usage</a></li>
-        <li><a
-            href="http://localhost:8983/solr/citi_py/select?q=*:*&rows=0&wt=json&indent=true&facet=true&facet.pivot={!stats=piv2}start_station_name,end_station_name&stats=true&stats.field={!tag=piv2}tripduration_i">Stats
-          about travel between most freq. used stations</a></li>
+            href="http://localhost:8983/solr/citi_py/select?q=*:*&rows=0&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}end_station_name&fq=tripduration_i:[1800 TO *]&fq={!geofilt sfield=end_station_location_p}&pt=40.760479,-73.98774&d=2&fl=id, end_station_name, geodist(end_station_location_p)">Paid
+          trips terminating within 2 km of Times Square</a></li>
       </ul>
     </div>
   </div>
-  <h1>Sprint Finish!</h1>
+  <h2>Sprint Finish!</h2>
 
   <div>
     Index the full data set using the python script
@@ -135,12 +137,84 @@
 
     <div>
       <ul>
-        <li>cd $SOLR_HOME/</li>
-        <li>bin/solr create_collection -c citi_full</li>
-        <li>cd $SOLR_FOR_DATA_SCIENCE_HOME</li>
-        <li>python setup.py -i /path/to/full/dataset -l citi_py</li>
+        <li>Copy all of the data down and put it in the data/full directory or softlink it to there</li>
+        <li>./index-full.sh</li>
       </ul>
     </div>
+    <h3>Queries</h3>
+    Adapt the queries above for all the data.  Note, since this is single machine and a lot more data, this may be slower.  Add nodes if you want faster results!
+    <div>
+      <ul>
+        <li><a
+            href="http://localhost:8983/solr/citi_full/browse?&facet=true&facet.field=bikeid_i&facet.limit=10&facet.field=gender_s&facet.field=birth_year_i&facet.field=start_station_name">Search
+          and Browse w/
+          Facets</a></li>
+        <li><a
+            href="http://localhost:8983/solr/citi_full/select?&q=*:*&rows=0&facet=true&facet.field=bikeid_i&facet.limit=10&facet.date=starttime_dt&facet.date.start=2013-07-01T00:00:00Z&facet.date.end=2013-10-31T11:59:59Z&facet.date.gap=%2B1DAY">Day
+          Usage</a></li>
+        <li><a
+            href="http://localhost:8983/solr/citi_full/select?&q=*:*&rows=0&stats=true&stats.field=birth_year_i&stats.calcdistinct=true">Data
+          Quality Issues</a></li>
+        <li><a
+          href="http://localhost:8983/solr/citi_full/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot=start_station_name,end_station_name">Most
+        popular trips (station to station)</a></li>
+      <li><a
+          href="http://localhost:8983/solr/citi_full/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}start_station_name,end_station_name&stats=true&stats.field={!tag=piv1}tripduration_i">Most
+        popular trips with stats</a> -- Where should I put my bike lanes?
+      </li>
+      <li><a
+          href="http://localhost:8983/solr/citi_full/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot=bikeid_i,start_station_name,end_station_name">Life
+        and times of a bike</a></li>
+      <li><a
+          href="http://localhost:8983/solr/citi_full/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}bikeid_i,start_station_name,end_station_name&stats=true&stats.field={!tag=piv1}tripduration_i">Life
+        and times of a bike with stats</a></li>
+      <li><a
+          href="http://localhost:8983/solr/citi_full/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}bikeid_i&stats=true&stats.field={!tag=piv1}tripduration_i">Bike
+        Usage</a> -- Can I optimize maintenance?
+      </li>
+      <li><a
+          href="http://localhost:8983/solr/citi_full/select?q=*:*&rows=0&wt=json&indent=true&facet=true&facet.pivot={!stats=piv2}start_station_name&stats=true&stats.field={!tag=piv2}tripduration_i">Stats
+        on trips from most popular stations</a></li>
+      <li><a
+          href="http://localhost:8983/solr/citi_full/select?q=*:*&rows=0&wt=json&indent=true&facet=true&facet.pivot={!stats=piv2}user_type_s,gender_s&stats=true&stats.field={!tag=piv2}birth_year_i">Customer
+        Stats</a></li>
+      <li><a
+          href="http://localhost:8983/solr/citi_full/select?q=*:*&rows=0&wt=json&indent=true&facet=true&facet.pivot={!stats=piv2}gender_s&stats=true&stats.field={!tag=piv2}tripduration_i">Who
+        rides more: men or women?</a></li>
+      <li><a
+          href="http://localhost:8983/solr/citi_full/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot=gender_s,start_station_name&facet.limit=20">Most
+        popular stations by gender (0 = N/A, 1 = Male, 2 = Female)</a></li>
+      <li><a
+          href="http://localhost:8983/solr/citi_full/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot=user_type_s,start_station_name&facet.limit=20">Most
+        popular stations by customer type</a></li>
+      <li><a
+          href="http://localhost:8983/solr/citi_full/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot=user_type_s,gender_s,start_station_name&facet.limit=20">Most
+        popular stations by customer type and gender</a></li>
+        <li><a
+            href="http://localhost:8983/solr/citi_full/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}bikeid_i,start_station_name,end_station_name&stats=true&stats.field={!tag=piv1}tripduration_i">Life
+          and times of a bike with stats</a></li>
+        <li><a
+            href="http://localhost:8983/solr/citi_full/select?q=*:*&rows=0&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}start_station_name&facet.pivot={!stats=piv2}bikeid_i&stats=true&stats.field={!tag=piv1,piv2}tripduration_i&fq={!geofilt sfield=start_station_location_p}&pt=40.760479,-73.98774&d=2&fl=id, start_station_name, geodist(start_station_location_p)">Stats
+          on bike usage for bikes originating within 2 km of Times Square</a></li>
+        <li><a
+            href="http://localhost:8983/solr/citi_full/select?&q=*:*&rows=0&facet=true&facet.limit=10&facet.range=birth_year_i&facet.range.start=1920&facet.range.end=2016&facet.range.gap=10">Usage
+          by birth decade (range facets)</a></li>
+        <li><a
+            href="http://localhost:8983/solr/citi_full/select?q=*:*&rows=0&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}end_station_name&fq=tripduration_i:[1800 TO *]&fq={!geofilt sfield=end_station_location_p}&pt=40.760479,-73.98774&d=2&fl=id, end_station_name, geodist(end_station_location_p)">Paid
+          trips terminating within 2 km of Times Square</a></li>
+      </ul>
+    </div>
+  </div>
+  <h1>Analyze Your Results</h1>
+
+  <div>Solr is great standalone. It's even better with <a href="http://www.lucidworks.com/products/fusion">Lucidworks
+    Fusion</a> and <a href="http://lucidworks.com/product/integrations/silk/">Lucidworks SiLK</a>
+
+    <h3>Start Lucidworks SiLK</h3>
+    <ul>
+      <li>./start-silk.sh</li>
+      <li>Browse to http://localhost:3334/#/dashboard</li>
+    </ul>
   </div>
 
 </div>
