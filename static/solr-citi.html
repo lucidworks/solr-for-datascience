@@ -100,7 +100,7 @@
     <ul>
       <li>Create a proper spatial representation of the start and stop stations, since field guessing can't do that</li>
       <li>Map Gender to enumerated types instead of ints, so that it displays better</li>
-      <li>Properly handle null birth years w/ dummy data</li>
+      <li>Properly handle null birth years</li>
       <li>Strongly type a few other fields using dynamic field names to be sure we get the exact field type we want. We
         could alternatively setup a schema using the Schema API or edit schema.xml
       </li>
@@ -123,9 +123,11 @@
         <li><a
             href="http://localhost:8983/solr/citi_py/select?&q=*:*&rows=0&facet=true&facet.limit=10&facet.range=birth_year_i&facet.range.start=1920&facet.range.end=2016&facet.range.gap=10">Usage
           by birth decade (range facets)</a></li>
+
         <li><a
             href="http://localhost:8983/solr/citi_py/select?q=*:*&rows=0&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}end_station_name&fq=tripduration_i:[1800 TO *]&fq={!geofilt sfield=end_station_location_p}&pt=40.760479,-73.98774&d=2&fl=id, end_station_name, geodist(end_station_location_p)">Paid
           trips terminating within 2 km of Times Square</a></li>
+        <li><a href="http://localhost:8983/solr/citi_py/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}user_type_s,gender_s&stats=true&stats.field={!func%20tag=piv1}sub(2015,birth_year_i)&facet.limit=20">Stats on age by gender and customer type</a></li>
       </ul>
     </div>
   </div>

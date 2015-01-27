@@ -122,9 +122,11 @@ def index(input_file):
                      "end_station_location_p": vals[9].replace("\"", "") + "," + vals[10].replace("\"", ""),
                      "bikeid_i": vals[11].replace("\"", ""),
                      "user_type_s": vals[12].replace("\"", ""),
-                     "birth_year_i": vals[13].replace("\"", "").replace("\\N", "-1"),
                      "gender_s": gender
             }
+            if vals[13].find("\\N") == -1 :
+                items["birth_year_i"] = vals[13].replace("\"", "")
+
             buffer.append(items)
             i += 1
             if i % 10000 == 0:
