@@ -4,9 +4,10 @@ This repository contains examples that go along with Grant Ingersoll's talk on "
 
 ## Pre-requisites
 
-Please make sure you havethe following:
+Please make sure you have the following:
 
-1. Python 2.7 (See `src/python/setup.py` for the libraries you will need.  Install them as well.)
+1. Python 2.7 
+1. Python libs: optparse, urllib2, time, datetime, os, json, random, optparse, httplib2, traceback, pysolr.  Note, for PySolr, you need lxml version 3 or later, per https://github.com/toastdriven/pysolr/issues/72
 1. NodeJS (I tested on 0.10.35)
 1. A modern browser, such as the latest Chrome or Firefox
 
