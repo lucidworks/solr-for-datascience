@@ -127,7 +127,7 @@
         <li><a
             href="http://localhost:8983/solr/citi_py/select?q=*:*&rows=0&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}end_station_name&fq=tripduration_i:[1800 TO *]&fq={!geofilt sfield=end_station_location_p}&pt=40.760479,-73.98774&d=2&fl=id, end_station_name, geodist(end_station_location_p)">Paid
           trips terminating within 2 km of Times Square</a></li>
-        <li><a href="http://localhost:8983/solr/citi_py/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}user_type_s,gender_s&stats=true&stats.field={!func%20tag=piv1}sub(2015,birth_year_i)&facet.limit=20">Stats on age by gender and customer type</a></li>
+        <li><a href="http://localhost:8983/solr/citi_py/select?q=*%3A*&rows=1&wt=json&indent=true&facet=true&facet.pivot={!stats=piv1}gender_s&stats=true&stats.field={!func%20tag=piv1}sub(2015,birth_year_i)&facet.limit=20">Stats on age by gender</a></li>
       </ul>
     </div>
   </div>
