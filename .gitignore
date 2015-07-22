@@ -2,5 +2,5 @@
 *.iml
 .idea
 node_modules
-solr-5.0*
+solr-5.*
 data/full

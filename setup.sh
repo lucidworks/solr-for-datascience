@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd solr-5.0.0-SNAPSHOT
+cd solr-5.2.1
 echo "Starting Solr"
 bin/solr start -cloud
 echo "Creating Collections"
