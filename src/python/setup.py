@@ -7,15 +7,7 @@ import os
 import json
 import httplib2
 
-try:
-    # Prefer lxml, if installed.
-    from lxml import etree as ET
-except ImportError:
-    try:
-        from xml.etree import cElementTree as ET
-    except ImportError:
-        raise ImportError("No suitable ElementTree implementation was found.")
-
+from xml.etree import ElementTree as ET
 
 import traceback
 import pysolr
